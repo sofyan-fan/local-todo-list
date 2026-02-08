@@ -1,0 +1,87 @@
+body{
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: blue;
+  color: white;
+  text-align: center;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 300px;
+  grid-auto-flow: row;
+  grid-auto-rows: 300px;
+  gap: 10px;
+}
+
+.task-card {
+  background-color: green;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px 0px;
+}
+
+.action-btns {
+  display: flex;
+  justify-content: end;
+  gap: 10px;
+  padding-right: 10px;
+}
+
+.form-container {
+  background-color: grey;
+  position: fixed;
+  width: auto;
+  height: 300px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: solid 1px black;
+  border-radius: 10px;
+}
+
+.form{
+  display: flex;
+  flex-direction: column;
+  padding: 32px 32px;
+  gap: 12px;
+
+}
+
+input{
+  width: auto;
+}
+
+select{
+  width: 75px;
+}
+
+.form-btns{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.date-section{
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+}
+
+#deadline{
+  width: 100px;
+}
