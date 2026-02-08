@@ -84,35 +84,30 @@ function hideForm() {
 }
 
 // funtion show form
-function showForm(task = null) {
-  currentTask = task;
+function showForm() {
+
+  const form = document.querySelector(".form");
   formContainer.style.display = "block";
 
-  const taskNameInput = document.getElementById("taskname");
-  const taskDesInput = document.getElementById("taskdes");
-  const deadlineInput = document.getElementById("deadline");
-  const taskPrioInput = document.getElementById("taskprio");
+  const taskNameInput = document.getElementById("taskname").value;
+  const taskDesInput = document.getElementById("taskdes").value;
+  const deadlineInput = document.getElementById("deadline").value;
+  const taskPrioInput = document.getElementById("taskprio").value;
 
-  if (task === null) {
-    taskNameInput.value = "";
-    taskDesInput.value = "";
-    deadlineInput.value = "";
-    taskPrioInput.value = "";
-  } else {
-    taskNameInput.value = task.title;
-    taskDesInput.value = task.description;
-    deadlineInput.value = task.deadline;
-    taskPrioInput.value = task.priority;
+  if (currentTask === null) {
+    /*taskNameInput = taskCard.textContent;
+    taskDesInput = taskCard.textContent;
+    deadlineInput = taskCard.textContent;
+    taskPrioInput = taskCard.textContent;*/
+    form.reset();
   }
 }
-
 
 addBtn.addEventListener("click", () => {
   showForm();
 })
 
 //handler to delete
-
 function attachedDeleteHandler(deleteButton, taskCard) {
   deleteButton.addEventListener("click", () => {
     taskCard.remove()
@@ -120,9 +115,10 @@ function attachedDeleteHandler(deleteButton, taskCard) {
 }
 
 //handler to adjust task
-function attachedAdjustHandler(adjustButton, task) {
+function attachedAdjustHandler(adjustButton, thisTask) {
   adjustButton.addEventListener("click", () => {
-    showForm(task);
+    currentTask = thisTask;
+    showForm();
   })
 }
 
@@ -175,7 +171,7 @@ function createTaskCard(task) {
   attachedDeleteHandler(delBtn, taskCard);
 
   //adjust task
-  attachedAdjustHandler(adjBtn, task)
+  attachedAdjustHandler(adjBtn, taskCard)
 
 
   // return to acces later
@@ -190,72 +186,39 @@ const taskNamelabel = document.querySelector(`label[for="${taskNameInput.id}"]`)
 
 form.addEventListener("submit", () => {
 
-
   // transfer input values to taskcard
   const title = document.getElementById("taskname").value;
   const description = document.getElementById("taskdes").value;
   const deadline = document.getElementById("deadline").value;
   const priority = document.getElementById("taskprio").value;
 
-  if (currentTask === null) {
+  if (currentTask) {
 
-    const task = createTask(
-      title,
-      description,
-      deadline,
-      priority,
-      false,
-    );
+    const task = currentTask._task;
 
-    createTaskCard(task);
-  } else {
-    // ✅ EDIT MODE
     task.title = title;
     task.description = description;
     task.deadline = deadline;
     task.priority = priority;
 
-    // update DOM
 
-    document.querySelector(".type-task").textContent = title;
-    document.querySelector(".desc-task").textContent = description;
-    document.querySelector(".task-deadline").textContent = `Due date: ${deadline}`;
-    document.querySelector(".task-prio").textContent = priority;
+    currentTask.querySelector(".type-task").textContent = title;
+    currentTask.querySelector(".desc-task").textContent = description;
+    currentTask.querySelector(".task-deadline").textContent = `Due date: ${deadline}`;
+    currentTask.querySelector(".task-prio").textContent = priority;
+
+    currentTask = null
+
+  } else {
+    const task = createTask(
+      title,
+      description,
+      deadline,
+      priority,
+    )
+    createTaskCard(task)
   }
 
-  currentTask = null;
 
   hideForm();
 })
-
-function createProduct(name, price, amount){
-  return {
-    name,
-    price,
-    amount,
-  }
-}
-
-const product1 = createProduct("pants", 50, 100 );
-
-console.log(product1)
-
-const container = document.querySelector(".container");
-
-container._product1 = product1;
-
-console.log(container._product1.name);
-
-function test (para = null){
-  
- if (para === null){
-  console.log("There is nothing here. Do you want to create a new task?")
- }else{
-  console.log("would you like to edit an existing task ?")
- }
-
-}
-
-test();
-
-
